@@ -1,32 +1,36 @@
 # Go-live: publish `@verilineapi/mcp` after API.market approval
 
-Do not run any of the publish or login steps until the three Veriline listings are approved and the live proxy host is confirmed. This file is the exact sequence. Auth (npm login, GitHub login, `mcp-publisher login`) is performed by the repository owner, not by an assistant.
+The three Veriline listings were approved and published on API.market on 26 Nov 2026 (03:36 Australia/Brisbane) and the live proxy host is confirmed. Remaining steps below (GitHub, npm, Official MCP Registry) still require the repository owner's login — do not run them from an assistant session.
 
 All git commits and npm metadata must stay under **Veriline API** / `verilineapi@proton.me`. No personal names, emails, machine paths, or country-specific personal domains.
 
-## 0. Confirm the live gateway
+## 0. Live gateway (confirmed 26 Nov 2026, Australia/Brisbane)
 
-1. Open each approved product's API Playground on API.market and copy the full endpoint URL. Official docs use:
+Confirmed from the public store pages and product docs at https://api.market/store/veriline:
 
-   `https://prod.api.market/api/v1/{workspace-slug}/{product-slug}/{endpoint-path}`
+`https://prod.api.market/api/v1/{workspace-slug}/{product-slug}/{endpoint-path}`
 
-   Expected (unconfirmed until you see the playground):
+| Product | Store | Product base |
+|---|---|---|
+| Email Deliverability Auditor | https://api.market/store/veriline/email-deliverability-auditor | `https://prod.api.market/api/v1/veriline/email-deliverability-auditor` |
+| Business & Tax-ID Verification | https://api.market/store/veriline/business-tax-id-validator | `https://prod.api.market/api/v1/veriline/business-tax-id-validator` |
+| US NPI Lookup | https://api.market/store/veriline/npi-registry-lookup | `https://prod.api.market/api/v1/veriline/npi-registry-lookup` |
 
-   | Product | Expected product base |
-   |---|---|
-   | Email Deliverability Auditor | `https://prod.api.market/api/v1/veriline/email-deliverability-auditor` |
-   | Business & Tax-ID Verification | `https://prod.api.market/api/v1/veriline/business-tax-id-validator` |
-   | US NPI Lookup | `https://prod.api.market/api/v1/veriline/npi-registry-lookup` |
+Buyer header: `x-api-market-key` (legacy alias `x-magicapi-key` is also accepted). Do not call `https://api.market/api/v1/...` — that host returns HTTP 421 and tells clients to use `https://prod.api.market`.
 
-   The buyer header in official API.market docs is `x-api-market-key`. Confirm that the playground's curl snippet uses the same name.
+Defaults in `src/config.ts`, `server.json`, `.env.example` and `README.md` already match the confirmed host. No further swap is required.
 
-2. If the host or path differs (for example the `/api` segment is missing, or a product slug was changed), update the defaults in:
+Unauthenticated curls of every listed endpoint return HTTP 400 (`No x-api-market-key or x-magicapi-key defined in headers`), not 404. The gateway validates the key before routing, so a typo slug also returns that auth error until a valid key is sent.
 
-   - `src/config.ts` (`DEFAULT_API_BASE` and `PRODUCT_SLUGS`)
-   - `server.json` (`VERILINE_API_BASE` default and description)
-   - `.env.example` and `README.md`
+Each product is also reachable as an API.market MCP server (tools/list works unauthenticated):
 
-3. Subscribe to each product on a test plan, set `VERILINE_API_KEY` and (if needed) `VERILINE_API_BASE`, then run:
+- https://api.market/api/mcp/veriline/email-deliverability-auditor
+- https://api.market/api/mcp/veriline/business-tax-id-validator
+- https://api.market/api/mcp/veriline/npi-registry-lookup
+
+The shared MCP gateway https://api.market/api/mcp/gateway exists but requires a buyer key (HTTP 401) and was not listed from public info alone.
+
+End-to-end proxy tests still need a subscribed API.market buyer key (subscribe to each product's Basic free trial in the console, then copy the key). Until then, origin live tests on `*.verilineapi.workers.dev` remain the baseline. Then run:
 
    ```bash
    npm test
@@ -134,15 +138,15 @@ curl "https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.ver
 
 ## 4. After it is live
 
-1. Update README product links to the public API.market listing URLs.
+1. README already cites https://api.market/store/veriline and the confirmed gateway; add any extra marketing links you want after npm/registry publish.
 2. Tell customers to install with `npx -y @verilineapi/mcp` and set `VERILINE_API_KEY`.
 3. Bump `package.json`, `src/config.ts` (`PACKAGE_VERSION`), and `server.json` together for later releases, then repeat `npm publish` and `mcp-publisher publish`.
 
 ## Checklist
 
-- [ ] Live playground URLs confirmed; defaults updated if they differed
-- [ ] `x-api-market-key` confirmed in the playground curl (or `VERILINE_AUTH_HEADER` default updated)
-- [ ] End-to-end tests through the API.market proxy passed
+- [x] Live playground URLs confirmed (26 Nov 2026); defaults already matched
+- [x] `x-api-market-key` confirmed on the live listings (legacy alias `x-magicapi-key` also accepted)
+- [ ] End-to-end tests through the API.market proxy passed (needs a subscribed buyer key)
 - [ ] GitHub repo `verilineapi/veriline-mcp` is public; commits are `Veriline API <verilineapi@proton.me>`
 - [ ] `@verilineapi/mcp` published to npm with `mcpName` set
 - [ ] `mcp-publisher validate` passed

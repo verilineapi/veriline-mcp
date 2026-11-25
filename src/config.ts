@@ -1,23 +1,23 @@
 /**
  * Runtime configuration for the Veriline MCP server.
  *
- * Host and per-product bases are fully configurable because the live
- * API.market proxy paths for the Veriline listings have not been confirmed
- * against a public playground URL yet. The defaults follow the pattern
- * documented at https://docs.api.market/seller-docs/testing-your-apis-and-products:
- *   https://prod.api.market/api/v1/{workspace-slug}/{product-slug}/{endpoint-path}
+ * Host and per-product bases are configurable. Defaults were confirmed
+ * on 26 Nov 2026 (Australia/Brisbane) against the live API.market Veriline
+ * product pages and playground docs:
+ *   https://prod.api.market/api/v1/veriline/{product-slug}/{endpoint-path}
  *
  * The buyer auth header default (`x-api-market-key`) is confirmed in official
- * API.market documentation (Usage API, product docs, and MCP server guide).
+ * API.market documentation and on the live Veriline listings. The gateway
+ * also accepts the legacy alias `x-magicapi-key`.
  */
 
 export const PACKAGE_VERSION = "1.0.0";
 export const SERVER_NAME = "veriline-mcp";
 
-/** Documented API.market org/base; unconfirmed against live Veriline listings. */
+/** Confirmed API.market org/base (live Veriline listings, 26 Nov 2026). */
 export const DEFAULT_API_BASE = "https://prod.api.market/api/v1/veriline";
 
-/** Confirmed in official API.market docs. */
+/** Confirmed in official API.market docs and live Veriline listings. */
 export const DEFAULT_AUTH_HEADER = "x-api-market-key";
 
 export const DEFAULT_TIMEOUT_MS = 5000;

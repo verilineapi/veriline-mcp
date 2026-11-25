@@ -27,7 +27,7 @@
         },
         {
           "name": "VERILINE_API_BASE",
-          "description": "Optional org/base URL. Defaults to https://prod.api.market/api/v1/veriline (documented pattern; confirm after listing approval).",
+          "description": "Optional org/base URL. Defaults to https://prod.api.market/api/v1/veriline (confirmed against live Veriline listings on 26 Nov 2026).",
           "isRequired": false,
           "isSecret": false,
           "format": "string",

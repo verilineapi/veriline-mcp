@@ -56,7 +56,7 @@ npx -y @verilineapi/mcp --transport=streamable-http --port=3000
 | `VERILINE_EMAIL_AUDITOR_KEY` / `VERILINE_BUSINESS_ID_KEY` / `VERILINE_NPI_KEY` | No | `VERILINE_API_KEY` | Per-product key override |
 | `VERILINE_TIMEOUT_MS` | No | `5000` | HTTP timeout in milliseconds |
 
-`VERILINE_API_BASE` defaults to the host pattern documented by API.market (`https://prod.api.market/api/v1/{workspace}/{product}/…`). That pattern has not yet been confirmed against the live Veriline playground URLs; if a listing shows a different host, set `VERILINE_API_BASE` (or a per-product `*_BASE`) accordingly. The default buyer header `x-api-market-key` is taken from official API.market documentation.
+`VERILINE_API_BASE` defaults to `https://prod.api.market/api/v1/veriline`, confirmed on 26 Nov 2026 (Australia/Brisbane) against the live Veriline product pages. Per-product bases are `{VERILINE_API_BASE}/email-deliverability-auditor`, `{VERILINE_API_BASE}/business-tax-id-validator` and `{VERILINE_API_BASE}/npi-registry-lookup`. The buyer header is `x-api-market-key` (the gateway also accepts the legacy alias `x-magicapi-key`). Store: https://api.market/store/veriline.
 
 ### Claude Desktop
 
