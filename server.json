@@ -1,0 +1,68 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.verilineapi/veriline-mcp",
+  "title": "Veriline API",
+  "description": "MCP tools for Veriline email, VAT/LEI/IBAN, and US NPI APIs via API.market.",
+  "version": "1.0.0",
+  "repository": {
+    "url": "https://github.com/verilineapi/veriline-mcp",
+    "source": "github"
+  },
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "@verilineapi/mcp",
+      "version": "1.0.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "VERILINE_API_KEY",
+          "description": "API.market subscriber key. Get one by subscribing to a Veriline API at https://api.market",
+          "isRequired": true,
+          "isSecret": true,
+          "format": "string"
+        },
+        {
+          "name": "VERILINE_API_BASE",
+          "description": "Optional org/base URL. Defaults to https://prod.api.market/api/v1/veriline (documented pattern; confirm after listing approval).",
+          "isRequired": false,
+          "isSecret": false,
+          "format": "string",
+          "default": "https://prod.api.market/api/v1/veriline"
+        },
+        {
+          "name": "VERILINE_AUTH_HEADER",
+          "description": "Optional buyer auth header name. Defaults to x-api-market-key (confirmed in official API.market docs).",
+          "isRequired": false,
+          "isSecret": false,
+          "format": "string",
+          "default": "x-api-market-key"
+        },
+        {
+          "name": "VERILINE_EMAIL_AUDITOR_BASE",
+          "description": "Optional full base URL for the Email Deliverability Auditor product.",
+          "isRequired": false,
+          "isSecret": false,
+          "format": "string"
+        },
+        {
+          "name": "VERILINE_BUSINESS_ID_BASE",
+          "description": "Optional full base URL for the Business & Tax-ID Verification product.",
+          "isRequired": false,
+          "isSecret": false,
+          "format": "string"
+        },
+        {
+          "name": "VERILINE_NPI_BASE",
+          "description": "Optional full base URL for the US NPI Lookup product.",
+          "isRequired": false,
+          "isSecret": false,
+          "format": "string"
+        }
+      ]
+    }
+  ]
+}

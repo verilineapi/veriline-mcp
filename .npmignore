@@ -1,0 +1,13 @@
+src
+tests
+scripts
+coverage
+vitest.config.ts
+tsconfig.json
+.env
+.env.*
+*.tgz
+*.log
+.mcp-publisher
+.git
+.gitignore

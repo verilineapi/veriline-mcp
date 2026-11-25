@@ -1,0 +1,20 @@
+# Dependencies and build
+node_modules/
+dist/
+coverage/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Packaged artifacts (created on demand)
+*.tgz
+*.log
+.DS_Store
+npm-debug.log*
+
+# Publisher / editor
+.mcp-publisher/
+.vscode/
+.idea/

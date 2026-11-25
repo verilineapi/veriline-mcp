@@ -1,0 +1,82 @@
+{
+  "name": "@verilineapi/mcp",
+  "version": "1.0.0",
+  "description": "MCP server for Veriline API — email deliverability, VAT/LEI/IBAN, and US NPI tools via API.market",
+  "mcpName": "io.github.verilineapi/veriline-mcp",
+  "type": "module",
+  "license": "MIT",
+  "author": {
+    "name": "Veriline API",
+    "email": "verilineapi@proton.me",
+    "url": "https://github.com/verilineapi"
+  },
+  "homepage": "https://github.com/verilineapi/veriline-mcp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/verilineapi/veriline-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/verilineapi/veriline-mcp/issues",
+    "email": "verilineapi@proton.me"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "veriline",
+    "verilineapi",
+    "api.market",
+    "email-deliverability",
+    "vat",
+    "vies",
+    "lei",
+    "iban",
+    "npi"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "veriline-mcp": "dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "server.json",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:live": "LIVE_SMOKE=1 vitest run tests/live-smoke.test.ts",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "validate:server-json": "node scripts/validate-server-json.mjs",
+    "inspector:list": "npm run build && npx --yes @modelcontextprotocol/inspector --cli node dist/index.js --method tools/list --format json",
+    "prepublishOnly": "npm run typecheck && npm test && npm run build && npm run validate:server-json"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "^2.4.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.10",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.2"
+  }
+}
