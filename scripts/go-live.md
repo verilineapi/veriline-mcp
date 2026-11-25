@@ -47,7 +47,9 @@ End-to-end proxy tests still need a subscribed API.market buyer key (subscribe t
 
 ## 1. Create the public GitHub repository
 
-Create a public repository `https://github.com/verilineapi/veriline-mcp` under the Veriline GitHub organization (or user) `verilineapi`. Empty repo, no README template (this tree already has one).
+`verilineapi` is a GitHub **user** account (confirmed 26 Nov 2026: public profile is `schema.org/Person` / `og:type=profile`; `https://api.github.com/orgs/verilineapi` returns 404). It is not an organization. The public repo `https://github.com/verilineapi/veriline-mcp` does not exist yet.
+
+Signed in as `verilineapi`, create an empty public repository named `veriline-mcp` (no README, license, or gitignore template — this tree already has them). Keep the GitHub display name as **Veriline API** (the login is currently shown with no display name).
 
 This checkout already has a repo-local git identity:
 
@@ -98,7 +100,9 @@ Confirm:
   npm view @verilineapi/mcp mcpName name version
   ```
 
-If the `@verilineapi` org does not yet exist on npm, the owner creates it and grants publish rights before `npm publish`.
+`@verilineapi/mcp` is a **scoped** package. The `@verilineapi` scope can belong to either an npm user named `verilineapi` or an npm organization of the same name. An npm organization is **not** required: if you register (or already own) the npm username `verilineapi`, that user automatically owns the `@verilineapi` user scope and can publish with `npm publish --access public`.
+
+As of 26 Nov 2026 the package is unpublished (`registry.npmjs.org/@verilineapi/mcp` is 404) and no packages exist under that scope. Public npm pages did not confirm whether the *username* `verilineapi` is still free. Sign up or log in as npm user `verilineapi` with the Veriline brand Gmail, then publish. Create an npm organization named `verilineapi` only if the username is already taken and the org name is still free; otherwise you cannot use this scope and the package name in `package.json` / `server.json` would have to change.
 
 ## 3. Publish to the Official MCP Registry
 
@@ -112,23 +116,14 @@ mcp-publisher --help
 mcp-publisher validate
 ```
 
-Authenticate as the owner of the `verilineapi` GitHub org, then publish:
+Authenticate as the GitHub **user** `verilineapi`, then publish. Because this is a personal namespace (`io.github.verilineapi/*`), the interactive device flow is enough. Registry issue #1468 applies only to GitHub *organizations* (a GitHub App token cannot read org membership) and does not apply here. A PAT is not required.
 
 ```bash
-# Interactive device flow (personal namespace only today; see note below):
 mcp-publisher login github
-
-# To publish under the io.github.verilineapi/* org namespace, use a
-# Personal Access Token that can read org membership instead:
-#   Classic PAT: scope read:org
-#   Fine-grained PAT: Organization permissions → Members → Read-only
-#   (tracking: https://github.com/modelcontextprotocol/registry/issues/1468)
-mcp-publisher login github --token <PAT>
-
 mcp-publisher publish
 ```
 
-Alternatively, publish from GitHub Actions with OIDC (`mcp-publisher login github-oidc`) once the repo exists. The owner performs any auth.
+An optional GitHub Actions workflow lives at `docs/ci/publish-mcp.yml.example`. It is **not enabled** (manual `workflow_dispatch` only; no tag or push trigger). Use it later if you prefer CI with `mcp-publisher login github-oidc`. The owner performs any auth.
 
 Verify:
 
@@ -140,7 +135,7 @@ curl "https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.ver
 
 1. README already cites https://api.market/store/veriline and the confirmed gateway; add any extra marketing links you want after npm/registry publish.
 2. Tell customers to install with `npx -y @verilineapi/mcp` and set `VERILINE_API_KEY`.
-3. Bump `package.json`, `src/config.ts` (`PACKAGE_VERSION`), and `server.json` together for later releases, then repeat `npm publish` and `mcp-publisher publish`.
+3. For batch 2 tools (webpage markdown and SEC EDGAR), follow `scripts/v1.1.0-batch2.md` after those listings are approved: bump to 1.1.0, add the five new tools, then repeat `npm publish` and `mcp-publisher publish`. Do not start that branch until v1.0.0 is live.
 
 ## Checklist
 

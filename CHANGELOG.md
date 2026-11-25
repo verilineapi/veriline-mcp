@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Optional GitHub Actions publish workflow (manual `workflow_dispatch` only; not enabled on push or tags).
+- Notes for a v1.1.0 branch once batch 2 (webpage markdown and SEC EDGAR) listings are approved (`scripts/v1.1.0-batch2.md`).
+
 ### Confirmed
 
 - Default `VERILINE_API_BASE` (`https://prod.api.market/api/v1/veriline`) and buyer header `x-api-market-key` confirmed against the live API.market Veriline listings on 26 Nov 2026 (Australia/Brisbane). No default value changed.
