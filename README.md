@@ -1,5 +1,9 @@
 # Veriline API MCP Server
 
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.postman.com/verilineapi-3605162/veriline-api/overview)
+
+The collections cover the three live APIs. Subscriber keys come from [API.market](https://api.market/store/veriline).
+
 Thin, open-source [Model Context Protocol](https://modelcontextprotocol.io) server for the **Veriline API** suite. It exposes six read-only tools that call the same HTTP APIs sold on [API.market](https://api.market) under the `veriline` store:
 
 | Tool | HTTP | What it does |
